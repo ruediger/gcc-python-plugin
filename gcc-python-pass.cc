@@ -160,8 +160,8 @@ do_pass_init(PyObject *s, PyObject *args, PyObject *kwargs,
 {
     struct PyGccPass *self = (struct PyGccPass *)s;
     const char *name;
-    char *keywords[] = {"name",
-                        NULL};
+    const char *keywords[] = {"name",
+                              NULL};
     struct opt_pass *pass;
 
     /*
@@ -365,8 +365,8 @@ PyObject *
 gcc_Pass_get_by_name(PyObject *cls, PyObject *args, PyObject *kwargs)
 {
     const char *name;
-    char *keywords[] = {"name",
-                        NULL};
+    const char *keywords[] = {"name",
+                              NULL};
     struct opt_pass *result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
@@ -397,9 +397,9 @@ impl_register(struct PyGccPass *self, PyObject *args, PyObject *kwargs,
               enum pass_positioning_ops pos_op, const char *arg_format)
 {
     struct register_pass_info rpi;
-    char *keywords[] = {"name",
-                        "instance_number",
-                        NULL};
+    const char *keywords[] = {"name",
+                              "instance_number",
+                              NULL};
 
     rpi.pass = self->pass;
     rpi.pos_op = pos_op;

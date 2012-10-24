@@ -43,8 +43,7 @@ int
 gcc_Option_init(PyGccOption * self, PyObject *args, PyObject *kwargs)
 {
     const char *text;
-    static char *kwlist[] = {"text", NULL};
-    int i;
+    static const char *kwlist[] = {"text", NULL};
 
     /*
       We need to call _track manually as we're not using PyGccWrapper_New():
@@ -57,9 +56,9 @@ gcc_Option_init(PyGccOption * self, PyObject *args, PyObject *kwargs)
     }
 
     /* Search for text within cl_options */
-    for (i = 0; i < cl_options_count; i++) {
+    for (unsigned i = 0; i < cl_options_count; i++) {
         if (0 == strcmp(cl_options[i].opt_text, text)) {
-            self->opt_code = i;
+            self->opt_code = static_cast<opt_code>(i);
             return 0; /* success */
         }
     }

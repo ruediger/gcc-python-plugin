@@ -160,14 +160,14 @@ gcc_python_register_attribute(PyObject *self, PyObject *args, PyObject *kwargs)
     PyObject *callable;
     struct attribute_spec *attr;
 
-    char *keywords[] = {"name",
-                        "min_length",
-                        "max_length",
-                        "decl_required",
-                        "type_required",
-                        "function_type_required",
-                        "callable",
-                        NULL};
+    const char *keywords[] = {"name",
+                              "min_length",
+                              "max_length",
+                              "decl_required",
+                              "type_required",
+                              "function_type_required",
+                              "callable",
+                              NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
                                      "siiiiiO:register_attribute", keywords,

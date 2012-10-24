@@ -151,7 +151,6 @@ PyObject *
 gcc_Gimple_get_rhs(struct PyGccGimple *self, void *closure)
 {
     PyObject * result = NULL;
-    int i;
 
     assert(gimple_has_ops(self->stmt));
 
@@ -161,7 +160,7 @@ gcc_Gimple_get_rhs(struct PyGccGimple *self, void *closure)
 	goto error;
     }
     
-    for (i = 1 ; i < gimple_num_ops(self->stmt); i++) {
+    for (unsigned i = 1 ; i < gimple_num_ops(self->stmt); i++) {
 	tree t = gimple_op(self->stmt, i);
 	PyObject *obj = gcc_python_make_wrapper_tree(t);
 	if (!obj) {
@@ -250,14 +249,13 @@ gcc_GimpleSwitch_get_labels(struct PyGccGimple *self, void *closure)
 {
     PyObject * result = NULL;
     unsigned num_labels = gimple_switch_num_labels(self->stmt);
-    int i;
 
     result = PyList_New(num_labels);
     if (!result) {
 	goto error;
     }
 
-    for (i = 0 ; i < num_labels; i++) {
+    for (unsigned i = 0 ; i < num_labels; i++) {
 	tree t = gimple_switch_label(self->stmt, i);
 	PyObject *obj = gcc_python_make_wrapper_tree(t);
 	if (!obj) {

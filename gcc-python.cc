@@ -81,8 +81,8 @@ gcc_python_define_macro(PyObject *self,
                         PyObject *args, PyObject *kwargs)
 {
     const char *macro;
-    char *keywords[] = {"macro",
-                        NULL};
+    const char *keywords[] = {"macro",
+                              NULL};
 
     if (!PyArg_ParseTupleAndKeywords(args, kwargs,
                                      "s:define_preprocessor_name", keywords,
@@ -130,14 +130,13 @@ static PyObject *
 gcc_python_get_option_list(PyObject *self, PyObject *args)
 {
     PyObject *result;
-    int i;
 
     result = PyList_New(0);
     if (!result) {
 	goto error;
     }
 
-    for (i = 0; i < cl_options_count; i++) {
+    for (unsigned int i = 0; i < cl_options_count; i++) {
 	PyObject *opt_obj = gcc_python_make_wrapper_opt_code((enum opt_code)i);
 	if (!opt_obj) {
 	    goto error;
@@ -200,7 +199,7 @@ gcc_python_get_parameters(PyObject *self, PyObject *args)
     }
 
     for (i = 0; i < get_num_compiler_params(); i++) {
-        PyObject *param_obj = gcc_python_make_wrapper_param_num(i);
+        PyObject *param_obj = gcc_python_make_wrapper_param_num(static_cast<compiler_param>(i));
         if (!param_obj) {
 	    goto error;
         }
@@ -463,7 +462,8 @@ static struct PyModuleDef gcc_module_def = {
 };
 #endif
 
-static PyMODINIT_FUNC PyInit_gcc(void)
+//static 
+PyMODINIT_FUNC PyInit_gcc(void)
 {
 #if PY_MAJOR_VERSION == 3
     PyObject *m;
