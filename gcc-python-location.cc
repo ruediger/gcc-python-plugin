@@ -35,17 +35,19 @@
 PyObject *
 gcc_Location_repr(struct PyGccLocation * self)
 {
-     return gcc_python_string_from_format("gcc.Location(file='%s', line=%i)",
+     return gcc_python_string_from_format("gcc.Location(file='%s', line=%i, column=%i)",
                                           LOCATION_FILE(self->loc),
-                                          LOCATION_LINE(self->loc));
+                                          LOCATION_LINE(self->loc),
+                                          LOCATION_COLUMN(self->loc));
 }
 
 PyObject *
 gcc_Location_str(struct PyGccLocation * self)
 {
-     return gcc_python_string_from_format("%s:%i",
+     return gcc_python_string_from_format("%s:%i:%i",
                                           LOCATION_FILE(self->loc),
-                                          LOCATION_LINE(self->loc));
+                                          LOCATION_LINE(self->loc),
+                                          LOCATION_COLUMN(self->loc));
 }
 
 PyObject *
