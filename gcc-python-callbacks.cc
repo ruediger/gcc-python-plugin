@@ -209,6 +209,16 @@ gcc_python_callback_for_PLUGIN_ATTRIBUTES(void *gcc_data, void *user_data)
 }
 
 static void
+gcc_python_callback_for_OVERRIDE_GATE(void *gcc_data, void *user_data)
+{
+    PyGILState_STATE gstate = PyGILState_Ensure();
+
+    gcc_python_finish_invoking_callback(gstate,
+                                        0, NULL, // FIXME
+                                        user_data);
+}
+
+static void
 gcc_python_callback_for_PLUGIN_PASS_EXECUTION(void *gcc_data, void *user_data)
 {
     PyGILState_STATE gstate;
@@ -381,6 +391,13 @@ gcc_python_register_callback(PyObject *self, PyObject *args, PyObject *kwargs)
 			  closure);
 	break;
 #endif /* GCC_PYTHON_PLUGIN_CONFIG_has_PLUGIN_FINISH_DECL */
+
+    case PLUGIN_OVERRIDE_GATE:
+        register_callback("python", // FIXME
+                          (enum plugin_event)event,
+                          gcc_python_callback_for_OVERRIDE_GATE,
+                          closure);
+        break;
 
     default:
         PyErr_Format(PyExc_ValueError, "event type %i invalid (or not wired up yet)", event);
