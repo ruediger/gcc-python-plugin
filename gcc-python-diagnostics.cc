@@ -161,6 +161,24 @@ gcc_python_inform(PyObject *self, PyObject *args, PyObject *kwargs)
     Py_RETURN_NONE;
 }
 
+PyObject *
+gcc_python_get_errorcount(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    return PyInt_FromLong(errorcount);
+}
+
+PyObject *
+gcc_python_get_warningcount(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    return PyInt_FromLong(warningcount);
+}
+
+PyObject *
+gcc_python_get_sorrycount(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    return PyInt_FromLong(sorrycount);
+}
+
 /*
   PEP-7
 Local variables:

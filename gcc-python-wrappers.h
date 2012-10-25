@@ -72,6 +72,15 @@ gcc_python_warning(PyObject *self, PyObject *args, PyObject *kwargs);
 PyObject *
 gcc_python_inform(PyObject *self, PyObject *args, PyObject *kwargs);
 
+PyObject *
+gcc_python_get_errorcount(PyObject *self, PyObject *args, PyObject *kwargs);
+
+PyObject *
+gcc_python_get_warningcount(PyObject *self, PyObject *args, PyObject *kwargs);
+
+PyObject *
+gcc_python_get_sorrycount(PyObject *self, PyObject *args, PyObject *kwargs);
+
 /* gcc-python-pass.c: */
 extern PyObject *
 gcc_python_make_wrapper_pass(struct opt_pass *pass);

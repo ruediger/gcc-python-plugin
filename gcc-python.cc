@@ -385,6 +385,18 @@ static PyMethodDef GccMethods[] = {
      (PyCFunction)gcc_python_set_location,
      METH_VARARGS,
      ("Temporarily set the default location for error reports\n")},
+    {"get_errorcount",
+     (PyCFunction)gcc_python_get_errorcount,
+     METH_VARARGS,
+     ("The number of errors that have been issued so far.\n")},
+    {"get_warningcount",
+     (PyCFunction)gcc_python_get_warningcount,
+     METH_VARARGS,
+     ("The number of warnings that have been issued so far.\n")},
+    {"get_sorrycount",
+     (PyCFunction)gcc_python_get_sorrycount,
+     METH_VARARGS,
+     ("The number of sorrys that have been issued so far.\n")},
 
     /* Options: */
     {"get_option_list",
