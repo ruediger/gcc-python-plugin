@@ -191,6 +191,9 @@ gcc_Declaration_get_location(struct PyGccTree *self, void *closure)
             add_simple_getter('is_builtin',
                               'PyBool_FromLong(DECL_IS_BUILTIN(self->t))',
                               "Is this declaration built in by the compiler?")
+            add_simple_getter('is_external',
+                              'PyBool_FromLong(DECL_EXTERNAL(self->t))',
+                              "Is this an external reference?")
             pytype.tp_repr = '(reprfunc)gcc_Declaration_repr'
 
         if localname == 'Type':
