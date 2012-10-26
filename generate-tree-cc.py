@@ -563,6 +563,9 @@ def generate_tree_code_classes():
             add_simple_getter('block',
                               'gcc_python_make_wrapper_tree(DECL_INITIAL(self->t))',
                               'Blocks')
+            add_simple_getter('saved_tree',
+                              'gcc_python_make_wrapper_tree(DECL_SAVED_TREE(self->t))',
+                              'The saved representation of the body of the entire function.')
 
             for attr in ('public', 'private', 'protected', 'static'):
                 getsettable.add_simple_getter(cu,
