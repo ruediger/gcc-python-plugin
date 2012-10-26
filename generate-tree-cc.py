@@ -600,6 +600,17 @@ def generate_tree_code_classes():
                               'gcc_python_make_wrapper_tree(CASE_LABEL(self->t))',
                               "The target of the case label, as a gcc.LabelDecl")
 
+        if tree_type.SYM == 'BIND_EXPR':
+            add_simple_getter('vars',
+                              'gcc_tree_list_from_chain(BIND_EXPR_VARS(self->t))',
+                              'List of gcc.Tree for Vars')
+            add_simple_getter('body',
+                              'gcc_python_make_wrapper_tree(BIND_EXPR_BODY(self->t))',
+                              'List of gcc.Tree for Body')
+            add_simple_getter('block',
+                              'gcc_python_make_wrapper_tree(BIND_EXPR_BLOCK(self->t))',
+                              'The gcc.Tree of block')
+
         cu.add_defn(getsettable.c_defn())
         cu.add_defn(methods.c_defn())
         pytype = PyGccWrapperTypeObject(identifier = 'gcc_%sType' % cc,
