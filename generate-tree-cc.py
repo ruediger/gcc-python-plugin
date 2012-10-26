@@ -542,6 +542,9 @@ def generate_tree_code_classes():
             add_simple_getter('callgraph_node',
                               'gcc_python_make_wrapper_cgraph_node(cgraph_get_node(self->t))',
                               'The gcc.CallgraphNode for this function declaration, or None')
+            add_simple_getter('block',
+                              'gcc_python_make_wrapper_tree(DECL_INITIAL(self->t))',
+                              'Blocks')
 
             for attr in ('public', 'private', 'protected', 'static'):
                 getsettable.add_simple_getter(cu,
