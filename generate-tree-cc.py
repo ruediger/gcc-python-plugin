@@ -487,6 +487,24 @@ def generate_tree_code_classes():
             add_simple_getter('vars',
                               'gcc_tree_list_from_chain(BLOCK_VARS(self->t))',
                                "The list of gcc.Tree for the declarations and labels in this block")
+            add_simple_getter('nonlocalized_vars',
+                              'VEC_tree_as_PyList(BLOCK_NONLOCALIZED_VARS(self->t))',
+                              "The list of gcc.Tree for nonlocalized vars")
+            add_simple_getter('subblocks',
+                              'gcc_tree_list_from_chain(BLOCK_SUBBLOCKS(self->t))',
+                               "The list of gcc.Tree for the subblocks")
+            add_simple_getter('supercontext',
+                              'gcc_python_make_wrapper_tree(BLOCK_SUPERCONTEXT(self->t))',
+                               "The gcc.Tree for the supercontext")
+            add_simple_getter('chain',
+                              'gcc_tree_list_from_chain(BLOCK_CHAIN(self->t))',
+                               "The list of gcc.Tree for the chain")
+            add_simple_getter('is_abstract',
+                              'PyBool_FromLong(BLOCK_ABSTRACT(self->t))',
+                              "Is abstract?")
+            add_simple_getter('abstract_origin',
+                              'gcc_python_make_wrapper_tree(BLOCK_ABSTRACT_ORIGIN(self->t))',
+                              "The gcc.Tree for the abstract origin")
 
         if tree_type.SYM == 'NAMESPACE_DECL':
             add_simple_getter('alias_of',
