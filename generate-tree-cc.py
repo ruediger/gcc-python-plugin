@@ -453,6 +453,9 @@ def generate_tree_code_classes():
             add_simple_getter('fields',
                               'gcc_tree_list_from_chain(TYPE_FIELDS(self->t))',
                               "The fields of this type")
+            add_simple_getter('methods',
+                              'gcc_tree_list_from_chain(TYPE_METHODS(self->t))',
+                              "The methods of this type")
 
         if tree_type.SYM == 'IDENTIFIER_NODE':
             add_simple_getter('name',
