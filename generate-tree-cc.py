@@ -58,6 +58,32 @@ gcc_Tree_get_addr(struct PyGccTree *self, void *closure)
     return PyLong_FromVoidPtr(self->t);
 }
 
+static PyObject *
+gcc_Tree_get_operands(struct PyGccTree *self, void *closure)
+{
+    PyObject *result = PyList_New(0);
+    if (!result) {
+      return nullptr;
+    }
+    int const len = TREE_OPERAND_LENGTH(self->t);
+    for (int i = 0; i < len; ++i) {
+        PyObject *item = gcc_python_make_wrapper_tree(TREE_OPERAND(self->t, i));
+        if (!item) {
+            goto error;
+        }
+        if (-1 == PyList_Append(result, item)) {
+            Py_DECREF(item);
+            goto error;
+        }
+        Py_DECREF(item);
+    }
+
+    return result;
+
+  error:
+    Py_XDECREF(result);
+    return nullptr;
+}
 """)
 
     getsettable = PyGetSetDefTable('gcc_Tree_getset_table',
@@ -66,7 +92,9 @@ gcc_Tree_get_addr(struct PyGccTree *self, void *closure)
                                     PyGetSetDef('addr', 'gcc_Tree_get_addr', None,
                                                 'The address of the underlying GCC object in memory'),
                                     PyGetSetDef('str_no_uid', 'gcc_Tree_get_str_no_uid', None,
-                                                'A string representation of this object, like str(), but without including any internal UID')],
+                                                'A string representation of this object, like str(), but without including any internal UID'),
+                                    PyGetSetDef('operands', 'gcc_Tree_get_operands', None,
+                                                'A list of operands')],
                                    identifier_prefix='gcc_Tree',
                                    typename='PyGccTree')
 
