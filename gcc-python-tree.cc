@@ -28,6 +28,8 @@
 
 #include "tree-flow.h" /* for op_symbol_code */
 
+#include "tree-iterator.h" /* for statement_list */
+
 
 /*
   Unfortunately, decl_as_string() is only available from the C++
@@ -850,6 +852,33 @@ gcc_tree_list_of_pairs_from_tree_list_chain(tree t)
  error:
     Py_XDECREF(result);
     return NULL;
+}
+
+PyObject *
+gcc_python_make_statement_list(tree t)
+{
+    PyObject *result = PyList_New(0);
+    if (!result) {
+        return nullptr;
+    }
+
+    for (auto i = tsi_start(t); not tsi_end_p(i); tsi_next(&i)) {
+        PyObject *item = gcc_python_make_wrapper_tree(tsi_stmt(i));
+        if (!item) {
+            goto error;
+        }
+        if (-1 == PyList_Append(result, item)) {
+            Py_DECREF(item);
+            goto error;
+        }
+        Py_DECREF(item);
+    }
+
+    return result;
+
+ error:
+    Py_XDECREF(result);
+    return nullptr;
 }
 
 PyObject *

@@ -611,6 +611,11 @@ def generate_tree_code_classes():
                               'gcc_python_make_wrapper_tree(BIND_EXPR_BLOCK(self->t))',
                               'The gcc.Tree of block')
 
+        if tree_type.SYM == 'STATEMENT_LIST':
+            add_simple_getter('list',
+                              'gcc_python_make_statement_list(self->t)',
+                              'The list of statements')
+
         cu.add_defn(getsettable.c_defn())
         cu.add_defn(methods.c_defn())
         pytype = PyGccWrapperTypeObject(identifier = 'gcc_%sType' % cc,
