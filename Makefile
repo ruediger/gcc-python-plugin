@@ -104,7 +104,7 @@ CPPFLAGS+= -I$(GCCPLUGINS_DIR)/include -I$(GCCPLUGINS_DIR)/include/c-family -I. 
 # and choose debugging information level.
 CXXFLAGS?=-O2 -g
 # Force these settings
-CXXFLAGS+= -fPIC -fno-strict-aliasing -Wall -Wno-write-strings -fpermissive
+CXXFLAGS+= -fPIC -fno-strict-aliasing -Wall -Wno-write-strings -fpermissive -std=c++11
 LIBS+= $(PYTHON_LIBS)
 ifneq "$(PLUGIN_PYTHONPATH)" ""
   CPPFLAGS+= -DPLUGIN_PYTHONPATH='"$(PLUGIN_PYTHONPATH)"'
