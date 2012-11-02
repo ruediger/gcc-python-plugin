@@ -222,6 +222,9 @@ gcc_Declaration_get_location(struct PyGccTree *self, void *closure)
             add_simple_getter('is_external',
                               'PyBool_FromLong(DECL_EXTERNAL(self->t))',
                               "Is this an external reference?")
+            add_simple_getter('is_self_reference',
+                              'PyBool_FromLong(DECL_SELF_REFERENCE_P(self->t))',
+                              "Is decl a self reference?")
             pytype.tp_repr = '(reprfunc)gcc_Declaration_repr'
 
         if localname == 'Type':
