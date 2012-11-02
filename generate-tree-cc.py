@@ -239,6 +239,9 @@ gcc_Declaration_get_location(struct PyGccTree *self, void *closure)
                                   'gcc_Type_get_sizeof',
                                   None,
                                   'sizeof() this type, as a gcc.IntegerCst')
+            add_simple_getter('main_variant',
+                              'gcc_python_make_wrapper_tree(TYPE_MAIN_VARIANT(self->t))',
+                              "The unqualified version of a type.")
 
             def add_type(c_expr_for_node, typename):
                 # Expose the given global type node within the gcc.Tree API
