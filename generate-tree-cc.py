@@ -505,6 +505,18 @@ def generate_tree_code_classes():
                               'PyBool_FromLong(TREE_STATIC(self->t))',
                               "Boolean: is this variable to be allocated with static storage")
 
+            add_simple_getter('size',
+                              'gcc_python_make_wrapper_tree(DECL_SIZE(self->t))',
+                              'Size')
+
+            add_simple_getter('align',
+                              'PyLong_FromLong(DECL_ALIGN(self->t))',
+                              'Alignment')
+
+            add_simple_getter('is_this_extern',
+                              'PyBool_FromLong(DECL_THIS_EXTERN(self->t))',
+                              'Is extern?')
+
         if tree_type.SYM == 'CONSTRUCTOR':
             add_complex_getter('elements',
                               "The elements of this constructor, as a list of (index, gcc.Tree) pairs")
@@ -570,6 +582,15 @@ def generate_tree_code_classes():
                                   'gcc_FunctionType_get_argument_types',
                                   None,
                                   "A tuple of gcc.Type instances, representing the argument types of this function type")
+
+        if tree_type.SYM == 'RESULT_DECL':
+            add_simple_getter('size',
+                              'gcc_python_make_wrapper_tree(DECL_SIZE(self->t))',
+                              'Size')
+
+            add_simple_getter('align',
+                              'PyLong_FromLong(DECL_ALIGN(self->t))',
+                              'Alignment')
 
         if tree_type.SYM == 'METHOD_TYPE':
             getsettable.add_gsdef('argument_types',
