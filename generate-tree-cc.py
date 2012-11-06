@@ -666,6 +666,49 @@ def generate_tree_code_classes():
                               'gcc_python_make_wrapper_tree(BIND_EXPR_BLOCK(self->t))',
                               'The gcc.Tree of block')
 
+        if tree_type.SYM == 'CALL_EXPR':
+            add_simple_getter('fn',
+                              'gcc_python_make_wrapper_tree(CALL_EXPR_FN(self->t))',
+                              'A pointer to the function to call.')
+            add_simple_getter('is_tailcall',
+                              'PyBool_FromLong(CALL_EXPR_TAILCALL(self->t))',
+                              'Is call in tail position?')
+
+            cu.add_defn("""
+PyObject *
+gcc_python_make_call_expr_args(tree t)
+{
+    PyObject *result = PyList_New(0);
+    if (!result) {
+        return nullptr;
+    }
+
+    tree arg;
+    call_expr_arg_iterator iter;
+    FOR_EACH_CALL_EXPR_ARG (arg, iter, t) {
+        PyObject *item = gcc_python_make_wrapper_tree(arg);
+        if (!item) {
+            goto error;
+        }
+        if (-1 == PyList_Append(result, item)) {
+            Py_DECREF(item);
+            goto error;
+        }
+        Py_DECREF(item);
+    }
+    return result;
+
+ error:
+    Py_XDECREF(result);
+    return nullptr;
+}
+""")
+
+            add_simple_getter('args',
+                              'gcc_python_make_call_expr_args(self->t)',
+                              'Arguments to the call.')
+
+
         if tree_type.SYM == 'STATEMENT_LIST':
             add_simple_getter('list',
                               'gcc_python_make_statement_list(self->t)',
